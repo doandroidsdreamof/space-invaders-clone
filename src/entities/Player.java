@@ -44,6 +44,7 @@ public class Player extends Entity {
 
     }
 
+    // TODO ConcurrentModificationException => use iterator
     public void updateBullets() {
         for (int i = 0; i < getBullets().size(); i++) {
             Bullet currentBullet = getBullets().get(i);
