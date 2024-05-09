@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import java.util.*;
 
+
 public abstract class Entity {
     protected int x, y, width, height;
     protected int speed = 20;
@@ -25,6 +26,8 @@ public abstract class Entity {
     }
 
     public abstract void update();
+
+    public abstract void movement();
 
     public abstract void moveLeft();
 

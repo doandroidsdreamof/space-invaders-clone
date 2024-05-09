@@ -13,6 +13,9 @@ public class Player extends Entity {
 
     }
 
+    public void movement() {
+    }
+
     public void update() {
         this.updateBullets();
         this.updateAnimation();

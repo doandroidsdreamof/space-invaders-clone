@@ -20,18 +20,18 @@ public class GameEngine extends JPanel implements ActionListener {
     private Entity player;
     private CollisionDetector collisionDetector;
     private Timer timer;
-    private List<Entity> enemiesList;
+    private List<Entity> enemyList;
     private Renderer renderer = new Renderer();
-    private static final int ENEMY_SPACING = 40;
-    private static final int ENEMY_X_OFFSET = 50;
+    private static final int ENEMY_SPACING = 50;
+    private static final int ENEMY_X_OFFSET = 150;
     private static final int ENEMY_Y_OFFSET = 50;
-    private static final int ENEMY_SPACING_ADDITIONAL = 10;
+
 
     public GameEngine() {
         this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
-        this.enemiesList = new ArrayList<>();
+        this.enemyList = new ArrayList<>();
         this.initEnemies();
-        this.collisionDetector = new CollisionDetector(enemiesList, (Player) player);
+        this.collisionDetector = new CollisionDetector(enemyList, (Player) player);
         this.setBackground(Color.BLACK);
         addKeyListener(new Controller(player));
         this.timer = new Timer(Constants.DELAY, this);
@@ -41,9 +41,9 @@ public class GameEngine extends JPanel implements ActionListener {
     public void initEnemies() {
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 10; col++) {
-                int x = ENEMY_X_OFFSET + col * (ENEMY_SPACING + ENEMY_SPACING_ADDITIONAL);
-                int y = ENEMY_Y_OFFSET + row * (ENEMY_SPACING + ENEMY_SPACING_ADDITIONAL);
-                enemiesList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
+                int x = ENEMY_X_OFFSET + col * (ENEMY_SPACING);
+                int y = ENEMY_Y_OFFSET + row * (ENEMY_SPACING);
+                enemyList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
             }
         }
     }
@@ -53,10 +53,10 @@ public class GameEngine extends JPanel implements ActionListener {
         renderer.draw(g, player);
         renderer.renderHitBox(g, player);
         renderer.renderPlayerBullets(g, player, player.getBullets());
-        for (Entity enemy : enemiesList) {
+        for (Entity enemy : enemyList) {
             if (enemy != null) {
                 renderer.draw(g, enemy);
-                renderer.renderHitBox(g, enemy);
+                // renderer.renderHitBox(g, enemy);
             }
         }
     }
@@ -64,18 +64,22 @@ public class GameEngine extends JPanel implements ActionListener {
     // TODO Deterministic game loop with deltaTime
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateGame();
-        repaint();
+        {
+
+            updateGame();
+            repaint();
+        }
     }
 
     // TODO abstract here => to player class
     private void updateGame() {
-        for (Entity enemy : enemiesList) {
+        for (Entity enemy : enemyList) {
             if (enemy != null) {
                 enemy.update(); // ! update before drawing
+
             }
         }
-        enemiesList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState()
+        enemyList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState()
                 && !((Enemy) enemy).getAliveState()); // remove dead enemy objects
         this.player.update();
         this.collisionDetector.checkCollision(this.player.getBullets());

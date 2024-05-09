@@ -1,10 +1,12 @@
 package entities;
+
 import constants.Constants;
 import state.StateMachine;
 
-
 public class Enemy extends Entity {
     private StateMachine stateMachine;
+    int xPos;
+    boolean direction = false;
 
     public Enemy(int x, int y) {
         Boolean isPlayer = false;
@@ -13,20 +15,34 @@ public class Enemy extends Entity {
 
     }
 
+    // TODO overlapping but
+    public void movement() {
+        xPos = direction ? this.x + 10 : this.x - 10;
+        if (xPos < 0) {
+            xPos = 0;
+        } else if (xPos > Constants.WIDTH - 60) {
+            xPos = Constants.WIDTH - 60;
+        }
+        this.x = xPos;
+    }
+
     public void update() {
         this.updateAnimation();
         this.stateMachine.update();
+        //this.movement();
+
     }
 
     @Override
     public void moveLeft() {
-        // TODO Auto-generated method stub
+        this.x -= 10;
 
     }
 
     @Override
     public void moveRight() {
-        // TODO Auto-generated method stub
+        this.x += 10;
+
     }
 
     @Override

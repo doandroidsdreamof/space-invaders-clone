@@ -9,7 +9,7 @@ public class Constants {
     public static final BufferedImage[] ENEMY_EXPLOSION = new BufferedImage[1];
     public static final BufferedImage[] PLAYER_IMAGE = new BufferedImage[1];
     public static final BufferedImage[] PLAYER_EXPLOSION = new BufferedImage[1];
-    public static final int WIDTH = 600;
+    public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int DELAY = 60;
     public static final int BULLET_SIZE = 10;
