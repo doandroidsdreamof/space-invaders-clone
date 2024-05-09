@@ -1,10 +1,5 @@
 package entities;
-
-import java.util.List;
-import java.awt.Graphics;
-
 import constants.Constants;
-import java.util.*;
 
 public class Player extends Entity {
 
@@ -54,14 +49,6 @@ public class Player extends Entity {
                 getBullets().remove(i);
                 i--;
             }
-
-        }
-    }
-
-    public void draw(Graphics g) {
-        g.drawImage(this.getCurrentAnimationFrame(), this.getX(), this.getY(), null);
-        for (Bullet bullet : this.getBullets()) {
-            bullet.draw(g);
 
         }
     }

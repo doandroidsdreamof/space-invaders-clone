@@ -1,7 +1,4 @@
 package entities;
-
-import java.awt.Graphics;
-
 import utils.AnimationManager;
 import java.awt.image.BufferedImage;
 
@@ -29,8 +26,6 @@ public abstract class Entity {
     }
 
     public abstract void update();
-
-    public abstract void draw(Graphics g);
 
     public abstract void moveLeft();
 

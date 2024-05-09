@@ -1,6 +1,4 @@
 package entities;
-
-import java.awt.Graphics;
 import constants.Constants;
 import state.StateMachine;
 
@@ -36,13 +34,4 @@ public class Enemy extends Entity {
         // TODO Auto-generated method stub
     }
 
-    public void draw(Graphics g) {
-        if (this.getAliveState()) {
-            g.drawImage(this.getCurrentAnimationFrame(), this.getX(), this.getY(), null);
-
-        }
-        // ! if not alive init explosion animation
-        g.drawImage(this.getCurrentAnimationFrame(), this.getX(), this.getY(), null);
-
-    }
 }

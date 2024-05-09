@@ -1,10 +1,7 @@
 package utils;
 
 import java.awt.image.BufferedImage;
-import java.util.Date;
-
 import constants.Constants;
-import entities.Enemy;
 
 public class AnimationManager {
     private BufferedImage[] frames;

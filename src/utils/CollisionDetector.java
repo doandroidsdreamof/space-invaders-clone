@@ -11,11 +11,9 @@ import java.util.ArrayList;
 public class CollisionDetector {
     private List<Entity> enemiesList;
     private Player player;
-    private Boolean isCollide;
 
-    public CollisionDetector(List enemiesList, Player player) {
+    public CollisionDetector(List<Entity> enemiesList, Player player) {
         this.enemiesList = enemiesList;
-        this.isCollide = false;
         this.player = player;
 
     }
