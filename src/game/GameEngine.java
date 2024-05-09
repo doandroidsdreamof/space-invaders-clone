@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import constants.Constants;
 import inputs.Controller;
-import interfaces.Entity;
 import utils.CollisionDetector;
 
 import java.util.List;
@@ -25,9 +24,9 @@ public class GameEngine extends JPanel implements ActionListener {
     private List<Entity> enemiesList;
     private int alienSpacing = 40;
 
+
     public GameEngine() {
-        this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP, Constants.PLAYER_IMAGE,
-                Constants.PLAYER_EXPLOSION);
+        this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
         this.enemiesList = new ArrayList<>();
         this.initEnemies();
         this.collisionDetector = new CollisionDetector(enemiesList, (Player) player);
@@ -42,8 +41,7 @@ public class GameEngine extends JPanel implements ActionListener {
             for (int col = 0; col < 10; col++) {
                 int x = 50 + col * (alienSpacing + 10);
                 int y = 50 + row * (alienSpacing + 10);
-                enemiesList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY,
-                        Constants.ENEMY_ANIMATION_FRAMES, Constants.ENEMY_EXPLOSION));
+                enemiesList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
             }
         }
     }
@@ -74,7 +72,7 @@ public class GameEngine extends JPanel implements ActionListener {
                 enemy.update(); // ! update before drawing
             }
         }
-        this.player.updateBullets();
+        enemiesList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState() && !((Enemy) enemy).getAliveState());  // remove dead enemy objects
         this.player.update();
         this.collisionDetector.checkCollision(this.player.getBullets());
 

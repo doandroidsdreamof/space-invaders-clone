@@ -1,129 +1,69 @@
 package entities;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 import constants.Constants;
-import interfaces.Entity;
-import utils.AnimationManager;
+import java.util.*;
 
-public class Player implements Entity {
-    private List<Bullet> bullet;
-    private AnimationManager animation;
-    private Boolean isAlive;
-    private int width, height;
-    private int speed = 20;
-    private int xPos, yPos;
-    private long lastShotTime; // to keep track last shot
+public class Player extends Entity {
 
-    // TODO factory design pattern
-    public Player(BufferedImage[] images, BufferedImage[] explosionImage) {
-        this.xPos = Constants.WIDTH / 2;
-        this.yPos = Constants.HEIGHT - 60;
-        this.isAlive = true;
-        this.animation = new AnimationManager(images, explosionImage, true);
-        this.width = animation.getWidth(); // TODO code there is duplication here and enemy class
-        this.height = animation.getHeight();
-        this.bullet = new ArrayList<Bullet>();
-        this.lastShotTime = 0;
-    }
 
-    public void setAliveState(Boolean state) {
-        this.isAlive = state;
-    }
+    public Player() {
+        Boolean isPlayer = true;
+        int xPos = Constants.WIDTH / 2;
+        int yPos = Constants.HEIGHT - 60;
+        super(xPos, yPos, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, isPlayer);
 
-    public Boolean getAliveState() {
-        return this.isAlive;
     }
 
     public void update() {
-        this.animation.updateFrame();
+        this.updateBullets();
+        this.updateAnimation();
     }
 
-    public int getX() {
-        return this.xPos;
-    }
-
-    public int getY() {
-        return this.yPos;
-    }
-
+    @Override
     public void moveLeft() {
-        this.xPos -= speed;
+        this.x -= this.speed;
 
     }
 
+    @Override
     public void moveRight() {
-        this.xPos += speed;
+        this.x += this.speed;
 
     }
 
-    public Bullet getLastBullet() {
-        if (bullet.size() > 0) {
-            return bullet.getLast();
-        }
-        return null;
-    }
 
     public void shoot() {
         long currentTime = System.currentTimeMillis();
-        // System.out.println(currentTime - lastShotTime);
-        if (currentTime - lastShotTime > Constants.SHOT_RATE_LIMITER) {
-            int bulletStartY = yPos;
-            int bulletStartX = (xPos - 6) + this.width / 2;
-            this.bullet.add(new Bullet(bulletStartX, bulletStartY, speed, true));
-            lastShotTime = currentTime;
+        if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER) {
+            int bulletStartY = this.y;
+            int bulletStartX = (this.x - 5) + this.width / 2;
+            this.getBullets().add(new Bullet(bulletStartX, bulletStartY, speed, true));
+            this.setLastShotTime(currentTime);
         }
 
     }
 
-    public List<Bullet> getBullets() {
-        return bullet;
-    }
-
     public void updateBullets() {
-        for (int i = 0; i < bullet.size(); i++) {
-            Bullet currentBullet = bullet.get(i);
-            // System.out.println("size=> " + bullet.size());
-            // System.out.println("index=> " + i);
+        for (int i = 0; i < getBullets().size(); i++) {
+            Bullet currentBullet = getBullets().get(i);
             currentBullet.update();
             if (currentBullet.getY() < 0) {
-                bullet.remove(i);
-                // System.out.println("Player bullet removed");
-                // TODO read about this
+                getBullets().remove(i);
                 i--;
-                // System.out.println("corrected index=> " + i);
             }
 
         }
     }
 
-    @Override
     public void draw(Graphics g) {
-        g.drawImage(animation.getCurrentFrame(isAlive), this.getX(), this.getY(), null);
+        g.drawImage(this.getCurrentAnimationFrame(), this.getX(), this.getY(), null);
         for (Bullet bullet : this.getBullets()) {
             bullet.draw(g);
 
         }
-    }
-
-    @Override
-    public void setX(int newPos) {
-        this.xPos = newPos;
-
-    }
-
-    @Override
-    public void setY(int newPos) {
-        this.yPos = newPos;
-
-    }
-
-    public Rectangle getBounds() {
-        return new Rectangle(xPos, yPos, animation.getWidth(), animation.getHeight());
     }
 
 }

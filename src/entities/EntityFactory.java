@@ -2,17 +2,15 @@ package entities;
 
 import java.awt.image.BufferedImage;
 import constants.Constants;
-import interfaces.Entity;
 
 public class EntityFactory {
 
-    public static Entity setEntity(int xPos, int yPos, Constants.EntityType type, BufferedImage[] image,
-            BufferedImage[] explosionImage) {
+    public static Entity setEntity(int x, int y, Constants.EntityType type) {
         if (type == type.SPACESHIP) {
-            return new Player(image,explosionImage);
+            return new <Entity>Player();
         }
         if (type == type.ENEMY) {
-            return new Enemy(xPos, yPos, image, explosionImage);
+            return new <Entity>Enemy(x, y);
         }
         return null;
 

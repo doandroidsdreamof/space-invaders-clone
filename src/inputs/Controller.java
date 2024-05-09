@@ -4,8 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import constants.Constants;
-import entities.Player;
-import interfaces.Entity;
+import entities.Entity;
 
 public class Controller implements KeyListener {
     private Entity player;
@@ -16,14 +15,12 @@ public class Controller implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // System.out.println(e.getKeyCode());
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT && player.getX() + 60 < Constants.WIDTH) {
-            // System.out.println(player.getX());
             player.moveRight();
 
         }
@@ -32,7 +29,6 @@ public class Controller implements KeyListener {
             player.moveLeft();
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            // System.out.println("fire");
             player.shoot();
 
         }
@@ -40,7 +36,6 @@ public class Controller implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // System.out.println(e.getKeyCode());
     }
 
 }
