@@ -1,6 +1,4 @@
 package entities;
-
-import java.awt.image.BufferedImage;
 import constants.Constants;
 
 public class EntityFactory {

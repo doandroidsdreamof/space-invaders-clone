@@ -26,8 +26,8 @@ public class Renderer {
 
     public void renderHitBox(Graphics g, Entity entity) {
         Rectangle box = entity.getBounds();
-        g.drawRect(entity.getX(), entity.getY(), (int) box.getWidth(), (int) box.getHeight());
         g.setColor(Color.RED);
+        g.drawRect(entity.getX(), entity.getY(), (int) box.getWidth(), (int) box.getHeight());
 
     }
 }

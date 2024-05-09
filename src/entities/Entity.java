@@ -22,7 +22,6 @@ public abstract class Entity {
         this.width = this.animation.getWidth();
         this.height = this.animation.getHeight();
         this.bullets = new ArrayList<>();
-
     }
 
     public abstract void update();

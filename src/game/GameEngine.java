@@ -21,8 +21,11 @@ public class GameEngine extends JPanel implements ActionListener {
     private CollisionDetector collisionDetector;
     private Timer timer;
     private List<Entity> enemiesList;
-    private int alienSpacing = 40;
     private Renderer renderer = new Renderer();
+    private static final int ENEMY_SPACING = 40;
+    private static final int ENEMY_X_OFFSET = 50;
+    private static final int ENEMY_Y_OFFSET = 50;
+    private static final int ENEMY_SPACING_ADDITIONAL = 10;
 
     public GameEngine() {
         this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
@@ -38,8 +41,8 @@ public class GameEngine extends JPanel implements ActionListener {
     public void initEnemies() {
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 10; col++) {
-                int x = 50 + col * (alienSpacing + 10);
-                int y = 50 + row * (alienSpacing + 10);
+                int x = ENEMY_X_OFFSET + col * (ENEMY_SPACING + ENEMY_SPACING_ADDITIONAL);
+                int y = ENEMY_Y_OFFSET + row * (ENEMY_SPACING + ENEMY_SPACING_ADDITIONAL);
                 enemiesList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
             }
         }

@@ -8,6 +8,8 @@ import entities.Entity;
 
 public class Controller implements KeyListener {
     private Entity player;
+    private static final int PLAYER_RIGHT_BOUNDARY_OFFSET = 60; // Depends on player sprite width
+    private static final int PLAYER_LEFT_BOUNDARY = 5;
 
     public Controller(Entity player) {
         this.player = player; // aggregation
@@ -20,12 +22,12 @@ public class Controller implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT && player.getX() + 60 < Constants.WIDTH) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT && player.getX() + PLAYER_RIGHT_BOUNDARY_OFFSET < Constants.WIDTH) {
             player.moveRight();
 
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT && player.getX() > 5) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && player.getX() > PLAYER_LEFT_BOUNDARY) {
             player.moveLeft();
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
