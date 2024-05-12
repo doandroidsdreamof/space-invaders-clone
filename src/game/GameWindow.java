@@ -11,7 +11,7 @@ public class GameWindow {
         jframe.setSize(Constants.WIDTH, Constants.HEIGHT);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
-        jframe.setTitle("space-invaders");
+        jframe.setTitle(Constants.GAME_TITLE);
         jframe.setResizable(false);
         jframe.setVisible(true);
 

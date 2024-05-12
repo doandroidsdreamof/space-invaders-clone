@@ -3,12 +3,15 @@ package constants;
 import java.awt.image.BufferedImage;
 
 import utils.ImageWrapper;
+import java.io.File;
+
 
 public class Constants {
     public static final BufferedImage[] ENEMY_ANIMATION_FRAMES = new BufferedImage[3];
     public static final BufferedImage[] ENEMY_EXPLOSION = new BufferedImage[1];
     public static final BufferedImage[] PLAYER_IMAGE = new BufferedImage[1];
     public static final BufferedImage[] PLAYER_EXPLOSION = new BufferedImage[1];
+    public static final String GAME_TITLE = "space-invaders";
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int DELAY = 60;
@@ -29,7 +32,6 @@ public class Constants {
         ENEMY_ANIMATION_FRAMES[0] = ImageWrapper.loadImage("src/images/InvaderA1.png");
         ENEMY_ANIMATION_FRAMES[1] = ImageWrapper.loadImage("src/images/InvaderA2.png");
         ENEMY_ANIMATION_FRAMES[2] = ImageWrapper.loadImage("src/images/space__0009_EnemyExplosion.png");
-
 
     }
 }

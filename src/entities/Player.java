@@ -5,12 +5,11 @@ import constants.Constants;
 public class Player extends Entity {
     private static final int BULLET_X_OFFSET = 5;
     private static final int PLAYER_SPEED = 20;
+    private static final int X_POS = Constants.WIDTH / 2, Y_POS = Constants.HEIGHT - 60;
+    protected static boolean isPlayer = true;
 
     public Player() {
-        Boolean isPlayer = true;
-        int xPos = Constants.WIDTH / 2;
-        int yPos = Constants.HEIGHT - 60;
-        super(xPos, yPos, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, isPlayer);
+        super(Player.X_POS, Player.Y_POS, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, Player.isPlayer);
 
     }
 

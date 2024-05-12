@@ -10,7 +10,6 @@ public abstract class Entity {
     protected int x, y, width, height;
     protected long lastShotTime;
     //! isStop => it must be a single source of truth for each instance in order to achieve movement.
-    protected static boolean isStop = false;
     protected AnimationManager animation;
     private Boolean isAlive;
     private List<Bullet> bullets;
@@ -55,13 +54,6 @@ public abstract class Entity {
 
     }
 
-    public boolean getIsStop() {
-        return Entity.isStop;
-    }
-
-    public void setIsStop(Boolean stop) {
-        Entity.isStop = stop;
-    }
 
     public Boolean getAliveState() {
         return this.isAlive;

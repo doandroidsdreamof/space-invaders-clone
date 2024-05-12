@@ -72,9 +72,9 @@ public class GameEngine extends JPanel implements ActionListener {
     public void enemyMovement() {
         for (Entity enemy : enemyList) {
             if (enemy.getX() < 0) {
-                enemy.setIsStop(true);
+                ((Enemy) enemy).setIsStop(true);
             } else if (enemy.getX() > Constants.WIDTH - 60) {
-                enemy.setIsStop(false);
+                ((Enemy) enemy).setIsStop(false);
             }
         }
 
