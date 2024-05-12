@@ -9,20 +9,18 @@ import entities.Player;
 import java.util.ArrayList;
 
 public class CollisionDetector {
-    private List<Entity> enemiesList;
     private Player player;
 
-    public CollisionDetector(List<Entity> enemiesList, Player player) {
-        this.enemiesList = enemiesList;
+    public CollisionDetector(Player player) {
         this.player = player;
 
     }
 
-    public void checkCollision(List<Bullet> bullets) {
+    public void checkCollision(List<Bullet> bullets, List<Entity> entity) {
         List<Bullet> removedBullets = new ArrayList<>();
 
         for (Bullet bullet : bullets) {
-            for (Entity enemy : enemiesList) {
+            for (Entity enemy : entity) {
                 if (enemy.getBounds().intersects(bullet.getBounds())) {
                     enemy.setAliveState(false);
                     removedBullets.add(bullet);

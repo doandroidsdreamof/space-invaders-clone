@@ -29,7 +29,7 @@ public class GameEngine extends JPanel implements ActionListener {
         this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
         this.enemyList = new ArrayList<>();
         this.initEnemies();
-        this.collisionDetector = new CollisionDetector(enemyList, (Player) player);
+        this.collisionDetector = new CollisionDetector((Player) player);
         this.setBackground(Color.BLACK);
         addKeyListener(new Controller(player));
         this.timer = new Timer(Constants.DELAY, this);
@@ -92,7 +92,7 @@ public class GameEngine extends JPanel implements ActionListener {
         enemyList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState()
                 && !((Enemy) enemy).getAliveState());
         this.player.update();
-        this.collisionDetector.checkCollision(this.player.getBullets());
+        this.collisionDetector.checkCollision(this.player.getBullets(), enemyList);
 
     }
 
