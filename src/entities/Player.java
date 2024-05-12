@@ -4,6 +4,7 @@ import constants.Constants;
 
 public class Player extends Entity {
     private static final int BULLET_X_OFFSET = 5;
+    private static final int PLAYER_SPEED = 20;
 
     public Player() {
         Boolean isPlayer = true;
@@ -13,9 +14,6 @@ public class Player extends Entity {
 
     }
 
-    public void movement() {
-    }
-
     public void update() {
         this.updateBullets();
         this.updateAnimation();
@@ -23,13 +21,13 @@ public class Player extends Entity {
 
     @Override
     public void moveLeft() {
-        this.x -= this.speed;
+        this.x -= Player.PLAYER_SPEED;
 
     }
 
     @Override
     public void moveRight() {
-        this.x += this.speed;
+        this.x += Player.PLAYER_SPEED;
 
     }
 
@@ -38,7 +36,7 @@ public class Player extends Entity {
         if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER) {
             int bulletStartY = this.y;
             int bulletStartX = (this.x - BULLET_X_OFFSET) + this.width / 2;
-            this.getBullets().add(new Bullet(bulletStartX, bulletStartY, speed, true));
+            this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Player.PLAYER_SPEED, true));
             this.setLastShotTime(currentTime);
         }
 

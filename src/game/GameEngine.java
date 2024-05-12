@@ -22,10 +22,8 @@ public class GameEngine extends JPanel implements ActionListener {
     private Timer timer;
     private List<Entity> enemyList;
     private Renderer renderer = new Renderer();
-    private static final int ENEMY_SPACING = 50;
-    private static final int ENEMY_X_OFFSET = 150;
-    private static final int ENEMY_Y_OFFSET = 50;
-
+    private static final int ENEMY_X_OFFSET = 150, ENEMY_Y_OFFSET = 50, ENEMY_SPACING = 50;
+    private static final int ENEMY_ROW = 4, ENEMY_COL = 12;
 
     public GameEngine() {
         this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
@@ -39,8 +37,8 @@ public class GameEngine extends JPanel implements ActionListener {
     }
 
     public void initEnemies() {
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 10; col++) {
+        for (int row = 0; row < GameEngine.ENEMY_ROW; row++) {
+            for (int col = 0; col < GameEngine.ENEMY_COL; col++) {
                 int x = ENEMY_X_OFFSET + col * (ENEMY_SPACING);
                 int y = ENEMY_Y_OFFSET + row * (ENEMY_SPACING);
                 enemyList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
@@ -56,7 +54,7 @@ public class GameEngine extends JPanel implements ActionListener {
         for (Entity enemy : enemyList) {
             if (enemy != null) {
                 renderer.draw(g, enemy);
-                // renderer.renderHitBox(g, enemy);
+                renderer.renderHitBox(g, enemy);
             }
         }
     }
@@ -71,16 +69,28 @@ public class GameEngine extends JPanel implements ActionListener {
         }
     }
 
-    // TODO abstract here => to player class
+    public void enemyMovement() {
+        for (Entity enemy : enemyList) {
+            if (enemy.getX() < 0) {
+                enemy.setIsStop(true);
+            } else if (enemy.getX() > Constants.WIDTH - 60) {
+                enemy.setIsStop(false);
+            }
+        }
+
+    }
+
     private void updateGame() {
         for (Entity enemy : enemyList) {
             if (enemy != null) {
-                enemy.update(); // ! update before drawing
-
+                // ! update before drawing
+                enemy.update();
             }
         }
+        this.enemyMovement();
+        // remove dead enemy objects
         enemyList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState()
-                && !((Enemy) enemy).getAliveState()); // remove dead enemy objects
+                && !((Enemy) enemy).getAliveState());
         this.player.update();
         this.collisionDetector.checkCollision(this.player.getBullets());
 

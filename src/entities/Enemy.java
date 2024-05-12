@@ -5,8 +5,8 @@ import state.StateMachine;
 
 public class Enemy extends Entity {
     private StateMachine stateMachine;
-    int xPos;
-    boolean direction = false;
+    //TODO => this should be increased based on difficulty
+    private static final int ENEMY_SPEED = 3;
 
     public Enemy(int x, int y) {
         Boolean isPlayer = false;
@@ -15,33 +15,31 @@ public class Enemy extends Entity {
 
     }
 
-    // TODO overlapping but
     public void movement() {
-        xPos = direction ? this.x + 10 : this.x - 10;
-        if (xPos < 0) {
-            xPos = 0;
-        } else if (xPos > Constants.WIDTH - 60) {
-            xPos = Constants.WIDTH - 60;
+        if (Entity.isStop) {
+            this.moveRight();
+        } else {
+            this.moveLeft();
         }
-        this.x = xPos;
+
     }
 
     public void update() {
         this.updateAnimation();
         this.stateMachine.update();
-        //this.movement();
+        this.movement();
 
     }
 
     @Override
     public void moveLeft() {
-        this.x -= 10;
+        this.x = this.x - Enemy.ENEMY_SPEED;
 
     }
 
     @Override
     public void moveRight() {
-        this.x += 10;
+        this.x = this.x + Enemy.ENEMY_SPEED;
 
     }
 

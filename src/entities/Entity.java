@@ -1,18 +1,20 @@
 package entities;
+
 import utils.AnimationManager;
 import java.awt.image.BufferedImage;
 
 import java.awt.Rectangle;
 import java.util.*;
 
-
 public abstract class Entity {
     protected int x, y, width, height;
-    protected int speed = 20;
     protected long lastShotTime;
+    //! isStop => it must be a single source of truth for each instance in order to achieve movement.
+    protected static boolean isStop = false;
     protected AnimationManager animation;
     private Boolean isAlive;
     private List<Bullet> bullets;
+
 
     public Entity(int x, int y, BufferedImage[] images, BufferedImage[] explosionImages, Boolean isPlayer) {
         this.x = x;
@@ -26,8 +28,6 @@ public abstract class Entity {
     }
 
     public abstract void update();
-
-    public abstract void movement();
 
     public abstract void moveLeft();
 
@@ -53,6 +53,14 @@ public abstract class Entity {
     public void setAliveState(Boolean isAlive) {
         this.isAlive = isAlive;
 
+    }
+
+    public boolean getIsStop() {
+        return Entity.isStop;
+    }
+
+    public void setIsStop(Boolean stop) {
+        Entity.isStop = stop;
     }
 
     public Boolean getAliveState() {
@@ -91,7 +99,6 @@ public abstract class Entity {
     public Rectangle getBounds() {
         return new Rectangle(this.getX(), this.getY(), animation.getWidth(), animation.getHeight());
     }
-
 
     public Bullet getLastBullet() {
         if (bullets.size() > 0) {
