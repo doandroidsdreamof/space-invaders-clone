@@ -17,7 +17,7 @@ public class Renderer {
 
     }
 
-    public void renderPlayerBullets(Graphics g, Entity entity, List<Bullet> bullets) {
+    public void renderBullets(Graphics g, Entity entity, List<Bullet> bullets) {
         g.drawImage(entity.getCurrentAnimationFrame(), entity.getX(), entity.getY(), null);
         for (Bullet bullet : bullets) {
             bullet.draw(g);

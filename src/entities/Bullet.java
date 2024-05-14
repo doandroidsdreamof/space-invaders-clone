@@ -12,6 +12,7 @@ public class Bullet {
     private int speed;
     private boolean isPlayerBullet;
 
+    // TODO Object Pool Design Pattern
     Bullet(int x, int y, int speed, boolean isPlayerBullet) {
         this.x = x;
         this.y = y;

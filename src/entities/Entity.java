@@ -71,7 +71,10 @@ public abstract class Entity {
 
     public void setY(int newPosY) {
         this.y = newPosY;
+    }
 
+    public int getWidth(){
+        return this.width;
     }
 
     public int getX() {

@@ -9,7 +9,7 @@ public class Player extends Entity {
     protected static boolean isPlayer = true;
 
     public Player() {
-        super(Player.X_POS, Player.Y_POS, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, Player.isPlayer);
+        super(X_POS, Y_POS, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, isPlayer);
 
     }
 
@@ -20,19 +20,19 @@ public class Player extends Entity {
 
     @Override
     public void moveLeft() {
-        this.x -= Player.PLAYER_SPEED;
+        this.x -= PLAYER_SPEED;
 
     }
 
     @Override
     public void moveRight() {
-        this.x += Player.PLAYER_SPEED;
+        this.x += PLAYER_SPEED;
 
     }
 
     public void shoot() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER) {
+        if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER_PLAYER) {
             int bulletStartY = this.y;
             int bulletStartX = (this.x - BULLET_X_OFFSET) + this.width / 2;
             this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Player.PLAYER_SPEED, true));

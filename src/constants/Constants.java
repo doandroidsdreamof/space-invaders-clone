@@ -1,11 +1,6 @@
 package constants;
-
 import java.awt.image.BufferedImage;
-
 import utils.ImageWrapper;
-import java.io.File;
-
-
 public class Constants {
     public static final BufferedImage[] ENEMY_ANIMATION_FRAMES = new BufferedImage[3];
     public static final BufferedImage[] ENEMY_EXPLOSION = new BufferedImage[1];
@@ -17,7 +12,8 @@ public class Constants {
     public static final int DELAY = 60;
     public static final int BULLET_SIZE = 10;
     public static final String SPACESHIP = null;
-    public static final long SHOT_RATE_LIMITER = 400;
+    public static final long SHOT_RATE_LIMITER_PLAYER = 800;
+    public static final long SHOT_RATE_LIMITER_ENEMY = 1000;
     public static final int ENEMY_ANIMATION_DELAY = 200;
 
     public enum EntityType {
