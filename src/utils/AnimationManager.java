@@ -43,14 +43,16 @@ public class AnimationManager {
     public BufferedImage getCurrentFrame(Boolean isAlive) {
         if (isAlive) {
             return frames[currentFrame];
+        } else {
+            // * change explosion image */
+            this.isExploded = true;
+            return frames[frames.length - 1];
         }
-        //* change explosion image */
-        this.isExploded = true;
-        return frames[frames.length - 1];
+
     }
 
     public int getWidth() {
-        return frames[frames.length - 1].getWidth();
+        return frames[currentFrame].getWidth();
     }
 
     public int getHeight() {

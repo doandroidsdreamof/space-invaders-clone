@@ -14,9 +14,7 @@ public class Renderer {
         if (entity != null) {
             g.drawImage(entity.getCurrentAnimationFrame(), entity.getX(), entity.getY(), null);
         }
-
     }
-
     public void renderBullets(Graphics g, Entity entity, List<Bullet> bullets) {
         g.drawImage(entity.getCurrentAnimationFrame(), entity.getX(), entity.getY(), null);
         for (Bullet bullet : bullets) {
@@ -29,5 +27,11 @@ public class Renderer {
         g.setColor(Color.RED);
         g.drawRect(entity.getX(), entity.getY(), (int) box.getWidth(), (int) box.getHeight());
 
+    }
+   
+    public void renderEntitiesWithBullets(Graphics g, Entity entity) {
+        this.draw(g, entity);
+        this.renderHitBox(g, entity);
+        this.renderBullets(g, entity, entity.getBullets());
     }
 }

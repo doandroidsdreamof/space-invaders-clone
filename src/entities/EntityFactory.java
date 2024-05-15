@@ -1,17 +1,17 @@
 package entities;
+
 import constants.Constants;
 
 public class EntityFactory {
 
-    public static Entity setEntity(int x, int y, Constants.EntityType type) {
-        if (type == type.SPACESHIP) {
-            return new <Entity>Player();
-        }
-        if (type == type.ENEMY) {
-            return new <Entity>Enemy(x, y);
-        }
-        return null;
-
+  public static Entity setEntity(int x, int y, Constants.EntityType type) {
+    switch (type) {
+    case SPACESHIP:
+      return new Player();
+    case ENEMY:
+      return new Enemy(x, y);
+    default:
+      throw new IllegalArgumentException("Unsupported entity type: " + type);
     }
-
+  }
 }

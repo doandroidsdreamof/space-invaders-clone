@@ -4,12 +4,12 @@ import constants.Constants;
 
 public class Player extends Entity {
     private static final int BULLET_X_OFFSET = 5;
-    private static final int PLAYER_SPEED = 20;
+    private static final int PLAYER_SPEED = 8;
     private static final int X_POS = Constants.WIDTH / 2, Y_POS = Constants.HEIGHT - 60;
     protected static boolean isPlayer = true;
 
     public Player() {
-        super(X_POS, Y_POS, Constants.PLAYER_IMAGE, Constants.PLAYER_EXPLOSION, isPlayer);
+        super(X_POS, Y_POS, Constants.PLAYER_ANIMATION_FRAMES, Constants.PLAYER_EXPLOSION, isPlayer);
 
     }
 
@@ -26,7 +26,7 @@ public class Player extends Entity {
 
     @Override
     public void moveRight() {
-        this.x += PLAYER_SPEED;
+        this.x +=  PLAYER_SPEED;
 
     }
 
@@ -35,7 +35,7 @@ public class Player extends Entity {
         if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER_PLAYER) {
             int bulletStartY = this.y;
             int bulletStartX = (this.x - BULLET_X_OFFSET) + this.width / 2;
-            this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Player.PLAYER_SPEED, true));
+            this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Constants.BULLET_SPEED, true));
             this.setLastShotTime(currentTime);
         }
 

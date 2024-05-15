@@ -16,13 +16,13 @@ public class CollisionDetector {
 
     }
 
-    public void checkCollision(List<Bullet> bullets, List<Entity> entity) {
+    // TODO code duplication
+    public void checkCollision(List<Bullet> bullets, List<Entity> entities) {
         List<Bullet> removedBullets = new ArrayList<>();
-
         for (Bullet bullet : bullets) {
-            for (Entity enemy : entity) {
-                if (enemy.getBounds().intersects(bullet.getBounds())) {
-                    enemy.setAliveState(false);
+            for (Entity entity : entities) {
+                if (entity.getBounds().intersects(bullet.getBounds())) {
+                    entity.setAliveState(false);
                     removedBullets.add(bullet);
                     break;
 
@@ -30,6 +30,21 @@ public class CollisionDetector {
             }
         }
         player.getBullets().removeAll(removedBullets);
+
+    }
+
+    public void checkPlayerCollision(List<Bullet> bullets, Entity entity) {
+        List<Bullet> removedBullets = new ArrayList<>();
+        for (Bullet bullet : bullets) {
+            if (entity.getBounds().intersects(bullet.getBounds())) {
+                System.out.println("fire in the hole");
+                this.player.setAliveState(false);
+                removedBullets.add(bullet);
+
+            }
+        }
+
+        entity.getBullets().removeAll(removedBullets);
 
     }
 

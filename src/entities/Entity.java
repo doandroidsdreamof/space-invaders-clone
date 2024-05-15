@@ -49,6 +49,7 @@ public abstract class Entity {
 
     }
 
+    //TODO state pattern refactoring
     public void setAliveState(Boolean isAlive) {
         this.isAlive = isAlive;
 

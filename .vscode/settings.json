@@ -3,5 +3,13 @@
     "java.project.outputPath": "bin",
     "[java]": {
         "editor.tabSize": 4
-    }
+    },
+/*     "emeraldwalk.runonsave": {
+        "commands": [
+          {
+            "match": "\\.java$",
+            "cmd": "google-java-format --replace ${file}"
+          },
+        ],
+      }, */
 }

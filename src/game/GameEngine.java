@@ -1,106 +1,126 @@
 package game;
 
-import java.awt.Graphics;
-
 import constants.Constants;
+import entities.*;
 import inputs.Controller;
-import utils.CollisionDetector;
-import utils.EnemyManager;
-
-import java.util.List;
-import java.util.Random;
-import java.util.ArrayList;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Color;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
-import entities.*;
+import utils.CollisionDetector;
+import utils.EnemyManager;
+import java.awt.*;
 
 public class GameEngine extends JPanel implements ActionListener {
-    private Entity player;
-    private CollisionDetector collisionDetector;
-    private Timer timer;
-    private List<Entity> enemyList;
-    private Renderer renderer = new Renderer();
-    private EnemyManager enemyManager;
-    private static final int ENEMY_X_OFFSET = 150, ENEMY_Y_OFFSET = 50, ENEMY_SPACING = 50;
-    private static final int ENEMY_ROW = 4, ENEMY_COL = 12;
+  private Entity player;
+  private CollisionDetector collisionDetector;
+  private Timer timer;
+  private List<Entity> enemyList;
+  private Renderer renderer = new Renderer();
+  private EnemyManager enemyManager;
+  private JButton playAgainButton;
 
-    public GameEngine() {
-        this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
-        this.enemyList = new ArrayList<>();
-        this.enemyManager = new EnemyManager(enemyList);
-        this.initEnemies();
-        this.collisionDetector = new CollisionDetector((Player) player);
-        this.setBackground(Color.BLACK);
-        addKeyListener(new Controller(player));
-        this.timer = new Timer(Constants.DELAY, this);
-        this.timer.start();
-    }
+  public GameEngine() {
+    setLayout(new BorderLayout());
+    this.initGame();
+    this.setupUI();
 
-    public void initEnemies() {
-        for (int row = 0; row < GameEngine.ENEMY_ROW; row++) {
-            for (int col = 0; col < GameEngine.ENEMY_COL; col++) {
-                int x = ENEMY_X_OFFSET + col * (ENEMY_SPACING);
-                int y = ENEMY_Y_OFFSET + row * (ENEMY_SPACING);
-                enemyList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
-            }
+  }
+
+  public void initGame() {
+    this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
+    this.enemyList = new ArrayList<>();
+    this.enemyManager = new EnemyManager(enemyList);
+    this.enemyManager.initEnemies();
+    this.collisionDetector = new CollisionDetector((Player) player);
+    this.setBackground(Color.BLACK);
+    addKeyListener(new Controller(player));
+    this.timer = new Timer(Constants.DELAY, this);
+    this.timer.start();
+  }
+
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    if (!this.player.getAliveState()) {
+      g.setColor(Color.BLACK);
+    } else {
+      renderer.renderEntitiesWithBullets(g, player);
+      for (Entity enemy : enemyList) {
+        if (enemy != null) {
+          renderer.renderEntitiesWithBullets(g, enemy);
         }
+      }
     }
 
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        renderer.draw(g, player);
-        renderer.renderHitBox(g, player);
-        renderer.renderBullets(g, player, player.getBullets());
-        for (Entity enemy : enemyList) {
-            if (enemy != null) {
-                renderer.draw(g, enemy);
-                renderer.renderHitBox(g, enemy);
-                renderer.renderBullets(g, enemy, enemy.getBullets());
-            }
-        }
+  }
+
+  // TODO Deterministic game loop with deltaTime
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    {
+      updateGame();
+      repaint();
+    }
+  }
+
+  private void updateGame() {
+    for (Entity enemy : enemyList) {
+      if (enemy != null) {
+        // ! update before drawing
+        enemy.update();
+        this.collisionDetector.checkPlayerCollision(enemy.getBullets(), this.player);
+      }
+    }
+    enemyManager.enemyMovement();
+    // remove dead enemy objects
+    enemyList.removeIf(
+        enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState() && !((Enemy) enemy).getAliveState());
+    this.player.update();
+    enemyManager.enemyShootController();
+    this.collisionDetector.checkCollision(this.player.getBullets(), enemyList);
+    // TODO decoupling && state pattern
+    if (!player.getAliveState()) {
+      timer.stop();
+      setBackground(Color.BLACK);
+      playAgainButton.setVisible(true);
     }
 
-    // TODO Deterministic game loop with deltaTime
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        {
+  }
 
-            updateGame();
-            repaint();
-        }
-    }
+  // TODO decoupling
+  private void resetGame() {
+    initializeGameState();
+    playAgainButton.setVisible(false);
+    addKeyListener(new Controller(this.player));
+    requestFocusInWindow();
+    timer.start();
+  }
 
-    public void enemyMovement() {
-        for (Entity enemy : enemyList) {
-            if (enemy.getX() < 0) {
-                ((Enemy) enemy).setMovementStopped(true);
-            } else if (enemy.getX() > Constants.WIDTH - 60) {
-                ((Enemy) enemy).setMovementStopped(false);
-            }
-        }
+  // TODO decoupling
+  private void setupUI() {
+    setBackground(Color.BLACK);
+    addKeyListener(new Controller(player));
+    setFocusable(true);
+    requestFocusInWindow();
 
-    }
+    playAgainButton = new JButton("play again");
+    playAgainButton.addActionListener(e -> resetGame());
+    playAgainButton.setOpaque(false);
+    playAgainButton.setContentAreaFilled(false);
+    playAgainButton.setBorderPainted(false);
+    playAgainButton.setForeground(Color.WHITE);
+    // TODO magic numbers
+    playAgainButton.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 15, 100, 30);
+    playAgainButton.setVisible(false);
+    add(playAgainButton);
+  }
 
-    private void updateGame() {
-        for (Entity enemy : enemyList) {
-            if (enemy != null) {
-                // ! update before drawing
-                enemy.update();
-
-            }
-        }
-        this.enemyMovement();
-        // remove dead enemy objects
-        enemyList.removeIf(enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState()
-                && !((Enemy) enemy).getAliveState());
-        this.player.update();
-        enemyManager.enemyShootController();
-        this.collisionDetector.checkCollision(this.player.getBullets(), enemyList);
-
-    }
-
+  private void initializeGameState() {
+    this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
+    this.enemyList.clear();
+    this.enemyManager.initEnemies();
+    this.collisionDetector = new CollisionDetector((Player) player);
+  }
 }
