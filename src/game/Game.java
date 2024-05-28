@@ -10,7 +10,4 @@ public class Game {
         // When a component has focus, it can receive keyboard input.
         gameEngine.requestFocus();
     }
-
-
-
 }

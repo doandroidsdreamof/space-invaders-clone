@@ -22,6 +22,7 @@ public class GameEngine extends JPanel implements ActionListener {
   private Renderer renderer;
   private EnemyManager enemyManager;
   private Button playAgainButton;
+  
 
   // TODO refactoring package imports
 
