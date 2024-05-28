@@ -11,12 +11,14 @@ public class Constants {
     public static final int HEIGHT = 600;
     public static final int DELAY = 60;
     public static final int BULLET_SIZE = 10;
-    public static final long SHOT_RATE_LIMITER_PLAYER = 800;
-    public static final long SHOT_RATE_LIMITER_ENEMY = 1000;
+    public static final int SHOT_RATE_LIMITER_PLAYER = 800;
+    public static final int SHOT_RATE_LIMITER_ENEMY = 1000;
     public static final int ENEMY_ANIMATION_DELAY = 200;
     public static final int BULLET_SPEED = 20; // ! this will be change based on difficulty levels
     public static final int ENEMY_X_OFFSET = 150, ENEMY_Y_OFFSET = 50, ENEMY_SPACING = 50;
     public static final int ENEMY_ROW = 4, ENEMY_COL = 12;
+    public static final int PLAYER_RIGHT_BOUNDARY_OFFSET = 60;
+    public static final int PLAYER_LEFT_BOUNDARY = 5;
 
     public enum EntityType {
         SPACESHIP, ENEMY

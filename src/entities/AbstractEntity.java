@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import java.util.*;
 
+import constants.Constants;
+
 public abstract class AbstractEntity {
     private int x, y, width, height;
     private long lastShotTime;
@@ -104,6 +106,26 @@ public abstract class AbstractEntity {
             return bullets.getLast();
         }
         return null;
+    }
+       public void updateBullets() {
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet currentBullet = bullets.get(i);
+            currentBullet.update();
+            if (currentBullet.getY() < 0 || currentBullet.getY() > Constants.HEIGHT) {
+                bullets.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public void shoot(int bulletSpeed, int shotRateLimiter, boolean isPlayerBullet) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastShotTime > shotRateLimiter) {
+            int bulletStartY = this.y;
+            int bulletStartX = (this.x - 5) + this.width / 2;
+            bullets.add(new Bullet(bulletStartX, bulletStartY, bulletSpeed, isPlayerBullet));
+            lastShotTime = currentTime;
+        }
     }
 
 }
