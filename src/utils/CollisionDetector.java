@@ -3,7 +3,7 @@ package utils;
 import java.util.List;
 
 import entities.Bullet;
-import entities.Entity;
+import entities.AbstractEntity;
 import entities.Player;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ public class CollisionDetector {
     }
 
     // TODO code duplication
-    public void checkCollision(List<Bullet> bullets, List<Entity> entities) {
+    public void checkCollision(List<Bullet> bullets, List<AbstractEntity> entities) {
         List<Bullet> removedBullets = new ArrayList<>();
         for (Bullet bullet : bullets) {
-            for (Entity entity : entities) {
+            for (AbstractEntity entity : entities) {
                 if (entity.getBounds().intersects(bullet.getBounds())) {
                     entity.setAliveState(false);
                     removedBullets.add(bullet);
@@ -33,7 +33,7 @@ public class CollisionDetector {
 
     }
 
-    public void checkPlayerCollision(List<Bullet> bullets, Entity entity) {
+    public void checkPlayerCollision(List<Bullet> bullets, AbstractEntity entity) {
         List<Bullet> removedBullets = new ArrayList<>();
         for (Bullet bullet : bullets) {
             if (entity.getBounds().intersects(bullet.getBounds())) {

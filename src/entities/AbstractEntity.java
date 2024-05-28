@@ -6,21 +6,21 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import java.util.*;
 
-public abstract class Entity {
-    protected int x, y, width, height;
-    protected long lastShotTime;
-    //! isStop => it must be a single source of truth for each instance in order to achieve movement.
-    protected AnimationManager animation;
+public abstract class AbstractEntity {
+    private int x, y, width, height;
+    private long lastShotTime;
+    // ! isStop => it must be a single source of truth for each instance in order to
+    // achieve movement.
+    private AnimationManager animation;
     private Boolean isAlive;
     private List<Bullet> bullets;
 
-
-    public Entity(int x, int y, BufferedImage[] images, BufferedImage[] explosionImages, Boolean isPlayer) {
+    public AbstractEntity(int x, int y, BufferedImage[] images, Boolean isPlayer) {
         this.x = x;
         this.y = y;
         this.lastShotTime = 0;
         this.isAlive = true;
-        this.animation = new AnimationManager(images, explosionImages, isPlayer);
+        this.animation = new AnimationManager(images, isPlayer);
         this.width = this.animation.getWidth();
         this.height = this.animation.getHeight();
         this.bullets = new ArrayList<>();
@@ -49,12 +49,11 @@ public abstract class Entity {
 
     }
 
-    //TODO state pattern refactoring
+    // TODO state pattern refactoring
     public void setAliveState(Boolean isAlive) {
         this.isAlive = isAlive;
 
     }
-
 
     public Boolean getAliveState() {
         return this.isAlive;
@@ -74,10 +73,6 @@ public abstract class Entity {
         this.y = newPosY;
     }
 
-    public int getWidth(){
-        return this.width;
-    }
-
     public int getX() {
         return this.x;
 
@@ -86,6 +81,14 @@ public abstract class Entity {
     public int getY() {
         return this.y;
 
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 
     public List<Bullet> getBullets() {

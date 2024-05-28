@@ -5,17 +5,16 @@ import constants.Constants;
 
 public class AnimationManager {
     private BufferedImage[] frames;
-    private BufferedImage[] explosionImage;
     private int currentFrame;
     private boolean isPlayer;
+    @SuppressWarnings("unused")
     private boolean isExploded;
     long startTime;
 
-    public AnimationManager(BufferedImage[] frames, BufferedImage[] explosionImage, Boolean isPlayer) {
+    public AnimationManager(BufferedImage[] frames, Boolean isPlayer) {
         this.frames = frames;
         this.isPlayer = isPlayer;
         this.isExploded = false;
-        this.explosionImage = explosionImage;
         this.currentFrame = 0;
         this.startTime = System.currentTimeMillis();
     }

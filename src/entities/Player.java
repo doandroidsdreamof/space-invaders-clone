@@ -2,14 +2,16 @@ package entities;
 
 import constants.Constants;
 
-public class Player extends Entity {
+public class Player extends AbstractEntity {
     private static final int BULLET_X_OFFSET = 5;
     private static final int PLAYER_SPEED = 8;
     private static final int X_POS = Constants.WIDTH / 2, Y_POS = Constants.HEIGHT - 60;
-    protected static boolean isPlayer = true;
+    private static boolean isPlayer = true;
+    private int tempPosition;
 
     public Player() {
-        super(X_POS, Y_POS, Constants.PLAYER_ANIMATION_FRAMES, Constants.PLAYER_EXPLOSION, isPlayer);
+        super(X_POS, Y_POS, Constants.PLAYER_ANIMATION_FRAMES, isPlayer);
+        this.tempPosition = this.getX();
 
     }
 
@@ -20,21 +22,27 @@ public class Player extends Entity {
 
     @Override
     public void moveLeft() {
-        this.x -= PLAYER_SPEED;
+        System.out.println(this.getX());
+
+        this.tempPosition -= PLAYER_SPEED;
+        this.setX(tempPosition);
 
     }
 
     @Override
     public void moveRight() {
-        this.x +=  PLAYER_SPEED;
+        System.out.println(this.getX());
+
+        this.tempPosition += PLAYER_SPEED;
+        this.setX(tempPosition);
 
     }
 
     public void shoot() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER_PLAYER) {
-            int bulletStartY = this.y;
-            int bulletStartX = (this.x - BULLET_X_OFFSET) + this.width / 2;
+            int bulletStartY = this.getY();
+            int bulletStartX = (this.getX() - BULLET_X_OFFSET) + this.getWidth() / 2;
             this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Constants.BULLET_SPEED, true));
             this.setLastShotTime(currentTime);
         }

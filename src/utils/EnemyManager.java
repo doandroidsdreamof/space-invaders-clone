@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Random;
 import constants.Constants;
 import entities.Enemy;
-import entities.Entity;
+import entities.AbstractEntity;
 import entities.EntityFactory;
 
 public class EnemyManager {
-    private List<Entity> enemyList;
+    private List<AbstractEntity> enemyList;
     long lastShotTime;
 
-    public EnemyManager(List<Entity> enemyList) {
+    public EnemyManager(List<AbstractEntity> enemyList) {
         this.enemyList = enemyList;
     }
 
@@ -21,7 +21,7 @@ public class EnemyManager {
         Random random = new Random();
         int randomShipIndex = random.nextInt(enemyList.size());
         if (currentTime - lastShotTime > Constants.SHOT_RATE_LIMITER_ENEMY) {
-            Entity shootingShip = enemyList.get(randomShipIndex);
+            AbstractEntity shootingShip = enemyList.get(randomShipIndex);
             int bulletStartY = shootingShip.getY();
             int bulletStartX = shootingShip.getX() - 5 + shootingShip.getWidth() / 2;
             ((Enemy) shootingShip).setBullets(bulletStartX, bulletStartY);
@@ -33,7 +33,7 @@ public class EnemyManager {
     }
 
     public void enemyMovement() {
-        for (Entity enemy : enemyList) {
+        for (AbstractEntity enemy : enemyList) {
             if (enemy.getX() < 0) {
                 ((Enemy) enemy).setMovementStopped(true);
             } else if (enemy.getX() > Constants.WIDTH - 60) {
@@ -48,7 +48,7 @@ public class EnemyManager {
             for (int col = 0; col < Constants.ENEMY_COL; col++) {
                 int x = Constants.ENEMY_X_OFFSET + col * (Constants.ENEMY_SPACING);
                 int y = Constants.ENEMY_Y_OFFSET + row * (Constants.ENEMY_SPACING);
-                enemyList.add(EntityFactory.setEntity(x, y, Constants.EntityType.ENEMY));
+                enemyList.add(EntityFactory.createEntity(x, y, Constants.EntityType.ENEMY));
             }
         }
     }

@@ -3,7 +3,7 @@ package entities;
 import constants.Constants;
 import state.StateMachine;
 
-public class Enemy extends Entity {
+public class Enemy extends AbstractEntity {
   private StateMachine stateMachine;
   // TODO => this should be increased based on difficulty
   private static final int ENEMY_SPEED = 3;
@@ -13,7 +13,7 @@ public class Enemy extends Entity {
   private int bulletStartX, bulletStartY;
 
   public Enemy(int x, int y) {
-    super(x, y, Constants.ENEMY_ANIMATION_FRAMES, Constants.ENEMY_EXPLOSION, isPlayer);
+    super(x, y, Constants.ENEMY_ANIMATION_FRAMES, isPlayer);
     this.stateMachine = new StateMachine(this);
   }
 
@@ -47,12 +47,12 @@ public class Enemy extends Entity {
 
   @Override
   public void moveLeft() {
-    this.x = this.x - Enemy.ENEMY_SPEED;
+    this.setX(this.getX() - Enemy.ENEMY_SPEED);
   }
 
   @Override
   public void moveRight() {
-    this.x = this.x + Enemy.ENEMY_SPEED;
+    this.setX(this.getX() + Enemy.ENEMY_SPEED);
   }
 
   // TODO code duplication
@@ -60,8 +60,8 @@ public class Enemy extends Entity {
   public void shoot() {
     long currentTime = System.currentTimeMillis();
     if (currentTime - this.getLastShotTime() > Constants.SHOT_RATE_LIMITER_ENEMY) {
-      int bulletStartY = this.y;
-      int bulletStartX = (this.x - 5) + this.width / 2;
+      int bulletStartY = this.getY();
+      int bulletStartX = (this.getX() - 5) + this.getWidth() / 2;
       this.getBullets().add(new Bullet(bulletStartX, bulletStartY, Constants.BULLET_SPEED, false));
       this.setLastShotTime(currentTime);
     }

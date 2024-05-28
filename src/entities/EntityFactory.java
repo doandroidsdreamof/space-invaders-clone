@@ -4,7 +4,7 @@ import constants.Constants;
 
 public class EntityFactory {
 
-  public static Entity setEntity(int x, int y, Constants.EntityType type) {
+  public static AbstractEntity createEntity(int x, int y, Constants.EntityType type) {
     switch (type) {
     case SPACESHIP:
       return new Player();

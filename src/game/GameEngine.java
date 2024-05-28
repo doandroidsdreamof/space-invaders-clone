@@ -3,6 +3,7 @@ package game;
 import constants.Constants;
 import entities.*;
 import inputs.Controller;
+import ui.Button;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +15,15 @@ import utils.EnemyManager;
 import java.awt.*;
 
 public class GameEngine extends JPanel implements ActionListener {
-  private Entity player;
+  private AbstractEntity player;
   private CollisionDetector collisionDetector;
   private Timer timer;
-  private List<Entity> enemyList;
-  private Renderer renderer = new Renderer();
+  private List<AbstractEntity> enemyList;
+  private Renderer renderer;
   private EnemyManager enemyManager;
-  private JButton playAgainButton;
+  private Button playAgainButton;
+
+  // TODO refactoring package imports
 
   public GameEngine() {
     setLayout(new BorderLayout());
@@ -30,15 +33,17 @@ public class GameEngine extends JPanel implements ActionListener {
   }
 
   public void initGame() {
-    this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
+    this.player = EntityFactory.createEntity(0, 0, Constants.EntityType.SPACESHIP);
     this.enemyList = new ArrayList<>();
     this.enemyManager = new EnemyManager(enemyList);
+    this.renderer = new Renderer();
     this.enemyManager.initEnemies();
     this.collisionDetector = new CollisionDetector((Player) player);
     this.setBackground(Color.BLACK);
     addKeyListener(new Controller(player));
     this.timer = new Timer(Constants.DELAY, this);
     this.timer.start();
+
   }
 
   protected void paintComponent(Graphics g) {
@@ -47,7 +52,7 @@ public class GameEngine extends JPanel implements ActionListener {
       g.setColor(Color.BLACK);
     } else {
       renderer.renderEntitiesWithBullets(g, player);
-      for (Entity enemy : enemyList) {
+      for (AbstractEntity enemy : enemyList) {
         if (enemy != null) {
           renderer.renderEntitiesWithBullets(g, enemy);
         }
@@ -60,13 +65,14 @@ public class GameEngine extends JPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     {
+
       updateGame();
       repaint();
     }
   }
 
   private void updateGame() {
-    for (Entity enemy : enemyList) {
+    for (AbstractEntity enemy : enemyList) {
       if (enemy != null) {
         // ! update before drawing
         enemy.update();
@@ -93,34 +99,24 @@ public class GameEngine extends JPanel implements ActionListener {
   private void resetGame() {
     initializeGameState();
     playAgainButton.setVisible(false);
-    addKeyListener(new Controller(this.player));
     requestFocusInWindow();
-    timer.start();
   }
 
-  // TODO decoupling
   private void setupUI() {
     setBackground(Color.BLACK);
     addKeyListener(new Controller(player));
     setFocusable(true);
     requestFocusInWindow();
-
-    playAgainButton = new JButton("play again");
-    playAgainButton.addActionListener(e -> resetGame());
-    playAgainButton.setOpaque(false);
-    playAgainButton.setContentAreaFilled(false);
-    playAgainButton.setBorderPainted(false);
-    playAgainButton.setForeground(Color.WHITE);
-    // TODO magic numbers
-    playAgainButton.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 15, 100, 30);
-    playAgainButton.setVisible(false);
+  
+    playAgainButton = new Button(e -> resetGame());
+    playAgainButton.centerButton(getWidth(), getHeight());
     add(playAgainButton);
+
+
   }
 
   private void initializeGameState() {
-    this.player = EntityFactory.setEntity(0, 0, Constants.EntityType.SPACESHIP);
-    this.enemyList.clear();
-    this.enemyManager.initEnemies();
-    this.collisionDetector = new CollisionDetector((Player) player);
+    this.initGame();
   }
+
 }

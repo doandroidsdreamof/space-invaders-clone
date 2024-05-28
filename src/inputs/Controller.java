@@ -6,21 +6,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 import constants.Constants;
-import entities.Entity;
+import entities.AbstractEntity;
 
 public class Controller implements KeyListener {
-    private Entity player;
+    private AbstractEntity player;
     private static final int PLAYER_RIGHT_BOUNDARY_OFFSET = 60;
     private static final int PLAYER_LEFT_BOUNDARY = 5;
     // * */ keysPressed => simultaneous key handling */
     private Set<Integer> keysPressed = new HashSet<>();
 
-    public Controller(Entity player) {
+    public Controller(AbstractEntity player) {
         this.player = player; // aggregation
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+    public void resetKeyHash(){
+        this.keysPressed.clear();
     }
 
     @Override
@@ -38,6 +42,7 @@ public class Controller implements KeyListener {
 
     // TODO controller simultaneous bug
     public void handleMovement() {
+        System.out.println(this.keysPressed);
         if (keysPressed.contains(KeyEvent.VK_RIGHT) && player.getX() + PLAYER_RIGHT_BOUNDARY_OFFSET < Constants.WIDTH) {
             player.moveRight();
         }
@@ -53,5 +58,7 @@ public class Controller implements KeyListener {
 
         }
     }
+
+    
 
 }
