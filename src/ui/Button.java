@@ -1,7 +1,5 @@
 package ui;
 
-import java.awt.Color;
-
 import javax.swing.JButton;
 import constants.Constants;
 import java.awt.event.ActionListener;
@@ -9,7 +7,7 @@ import java.awt.event.ActionListener;
 public class Button extends JButton {
 
     public Button(ActionListener actionListener) {
-        super(Constants.PLAY_AGAIN);
+        super(Constants.Game.PLAY_AGAIN_TEXT);
         initButton(actionListener);
     }
 
@@ -20,13 +18,12 @@ public class Button extends JButton {
         setBorderPainted(false);
         setForeground(java.awt.Color.WHITE);
         // TODO magic numbers
-        setBounds(0, 0, 100, 30); 
+        setBounds(0, 0, 100, 30);
         setVisible(false);
     }
 
     public void centerButton(int parentWidth, int parentHeight) {
         setBounds(parentWidth / 2 - 50, parentHeight / 2 - 15, 100, 30);
     }
-
 
 }

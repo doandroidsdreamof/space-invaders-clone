@@ -110,7 +110,7 @@ public abstract class AbstractEntity {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet currentBullet = bullets.get(i);
             currentBullet.update();
-            if (currentBullet.getY() < 0 || currentBullet.getY() > Constants.HEIGHT) {
+            if (currentBullet.getY() < 0 || currentBullet.getY() > Constants.Game.HEIGHT) {
                 bullets.remove(i);
                 i--;
             }

@@ -7,7 +7,7 @@ public class Player extends AbstractEntity {
     private int tempPosition;
 
     public Player() {
-        super(Constants.WIDTH / 2, Constants.HEIGHT - 60, Constants.PLAYER_ANIMATION_FRAMES, true);
+        super(Constants.Game.WIDTH / 2, Constants.Game.HEIGHT - 60, Constants.PLAYER_ANIMATION_FRAMES, true);
         this.tempPosition = this.getX();
     }
 
@@ -31,6 +31,6 @@ public class Player extends AbstractEntity {
 
     @Override
     public void shoot() {
-        super.shoot(Constants.BULLET_SPEED, Constants.SHOT_RATE_LIMITER_PLAYER, true);
+        super.shoot(Constants.Bullet.SPEED, Constants.Player.SHOT_RATE_LIMITER, true);
     }
 }

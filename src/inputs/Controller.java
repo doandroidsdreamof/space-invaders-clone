@@ -23,7 +23,7 @@ public class Controller implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
-    public void resetKeyHash(){
+    public void resetKeyHash() {
         this.keysPressed.clear();
     }
 
@@ -43,7 +43,8 @@ public class Controller implements KeyListener {
     // TODO controller simultaneous bug
     public void handleMovement() {
         System.out.println(this.keysPressed);
-        if (keysPressed.contains(KeyEvent.VK_RIGHT) && player.getX() + PLAYER_RIGHT_BOUNDARY_OFFSET < Constants.WIDTH) {
+        if (keysPressed.contains(KeyEvent.VK_RIGHT)
+                && player.getX() + PLAYER_RIGHT_BOUNDARY_OFFSET < Constants.Game.WIDTH) {
             player.moveRight();
         }
 
@@ -58,5 +59,5 @@ public class Controller implements KeyListener {
 
         }
     }
-    
+
 }

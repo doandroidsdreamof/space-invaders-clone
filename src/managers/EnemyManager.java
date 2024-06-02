@@ -20,7 +20,7 @@ public class EnemyManager {
         long currentTime = System.currentTimeMillis();
         Random random = new Random();
         int randomShipIndex = random.nextInt(enemyList.size());
-        if (currentTime - lastShotTime > Constants.SHOT_RATE_LIMITER_ENEMY) {
+        if (currentTime - lastShotTime > Constants.Enemy.SHOT_RATE_LIMITER) {
             AbstractEntity shootingShip = enemyList.get(randomShipIndex);
             int bulletStartY = shootingShip.getY();
             int bulletStartX = shootingShip.getX() - 5 + shootingShip.getWidth() / 2;
@@ -36,7 +36,7 @@ public class EnemyManager {
         for (AbstractEntity enemy : enemyList) {
             if (enemy.getX() < 0) {
                 ((Enemy) enemy).setMovementStopped(true);
-            } else if (enemy.getX() > Constants.WIDTH - 60) {
+            } else if (enemy.getX() > Constants.Game.WIDTH - 60) {
                 ((Enemy) enemy).setMovementStopped(false);
             }
         }
@@ -44,10 +44,10 @@ public class EnemyManager {
 
     // TODO Constants.X => search object destructurel java equivalent
     public void initEnemies() {
-        for (int row = 0; row < Constants.ENEMY_ROW; row++) {
-            for (int col = 0; col < Constants.ENEMY_COL; col++) {
-                int x = Constants.ENEMY_X_OFFSET + col * (Constants.ENEMY_SPACING);
-                int y = Constants.ENEMY_Y_OFFSET + row * (Constants.ENEMY_SPACING);
+        for (int row = 0; row < Constants.Enemy.ROW; row++) {
+            for (int col = 0; col < Constants.Enemy.COL; col++) {
+                int x = Constants.Enemy.X_OFFSET + col * (Constants.Enemy.SPACING);
+                int y = Constants.Enemy.Y_OFFSET + row * (Constants.Enemy.SPACING);
                 enemyList.add(EntityFactory.createEntity(x, y, Constants.EntityType.ENEMY));
             }
         }

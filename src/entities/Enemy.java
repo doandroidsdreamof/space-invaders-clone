@@ -44,7 +44,7 @@ public class Enemy extends AbstractEntity {
 
     @Override
     public void shoot() {
-        super.shoot(Constants.BULLET_SPEED, Constants.SHOT_RATE_LIMITER_ENEMY, false);
+        super.shoot(Constants.Bullet.SPEED, Constants.Enemy.SHOT_RATE_LIMITER, false);
     }
 
     public boolean getMovementStopped() {

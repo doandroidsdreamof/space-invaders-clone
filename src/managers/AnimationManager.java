@@ -24,7 +24,7 @@ public class AnimationManager {
             return;
         }
         long timeElapsed = System.currentTimeMillis() - startTime;
-        if (timeElapsed > Constants.ENEMY_ANIMATION_DELAY) {
+        if (timeElapsed > Constants.Enemy.ANIMATION_DELAY) {
             this.changeImage();
             this.startTime = System.currentTimeMillis();
 

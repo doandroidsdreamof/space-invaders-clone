@@ -41,7 +41,7 @@ public class GameEngine extends JPanel implements ActionListener {
     this.collisionDetector = new CollisionDetector((Player) player);
     this.setBackground(Color.BLACK);
     addKeyListener(new Controller(player));
-    this.timer = new Timer(Constants.DELAY, this);
+    this.timer = new Timer(Constants.Game.DELAY, this);
     this.timer.start();
 
   }
