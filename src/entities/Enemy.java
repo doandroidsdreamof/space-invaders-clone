@@ -4,7 +4,7 @@ import constants.Constants;
 
 public class Enemy extends AbstractEntity {
     private static final int ENEMY_SPEED = 3;
-    private static boolean isStop = false;
+    private static boolean isStop = false; // ! it should be the same across all instances for movement logic
     @SuppressWarnings("unused")
     private int bulletStartX, bulletStartY;
 

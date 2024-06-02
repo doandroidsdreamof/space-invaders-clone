@@ -1,7 +1,10 @@
 package game;
 
+import ui.GameWindow;
+
 public class Game {
     private GameEngine gameEngine;
+    @SuppressWarnings("unused")
     private GameWindow gameWindow;
 
     public Game() {

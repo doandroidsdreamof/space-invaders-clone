@@ -3,6 +3,7 @@ package game;
 import constants.Constants;
 import entities.*;
 import inputs.Controller;
+import managers.EnemyManager;
 import ui.Button;
 
 import java.awt.event.ActionEvent;
@@ -10,8 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import utils.CollisionDetector;
-import utils.EnemyManager;
+
 import java.awt.*;
 
 public class GameEngine extends JPanel implements ActionListener {
@@ -22,7 +22,6 @@ public class GameEngine extends JPanel implements ActionListener {
   private Renderer renderer;
   private EnemyManager enemyManager;
   private Button playAgainButton;
-  
 
   // TODO refactoring package imports
 
@@ -81,7 +80,10 @@ public class GameEngine extends JPanel implements ActionListener {
       }
     }
     enemyManager.enemyMovement();
-    // remove dead enemy objects
+    // TODO decoupling => EnemyManager
+    // * remove dead enemy object
+    // ! bug => bullets removed when enemy destroyed it must be independent from
+    // ! enemy instance
     enemyList.removeIf(
         enemy -> enemy instanceof Enemy && !((Enemy) enemy).getAliveState() && !((Enemy) enemy).getAliveState());
     this.player.update();
@@ -108,12 +110,10 @@ public class GameEngine extends JPanel implements ActionListener {
     addKeyListener(new Controller(player));
     setFocusable(true);
     requestFocusInWindow();
-  
+
     playAgainButton = new Button(e -> resetGame());
     playAgainButton.centerButton(getWidth(), getHeight());
     add(playAgainButton);
-
-
   }
 
   private void initializeGameState() {

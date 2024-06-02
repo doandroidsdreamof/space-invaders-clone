@@ -56,9 +56,10 @@ This project is structured into several packages:
 
 -   `constants`: Holds game configuration constants.
 -   `entities`: Contains classes for player, enemies, and bullets.
+-   `managers`: Manager wrapper classes.
 -   `inputs`: Manages user inputs.
 -   `ui`: User interface components like buttons.
--   `utils`: Utility classes like collision detection and enemy management.
+-   `utils`: Utility classes like collision detection.
 -   `game`: Core game execution and rendering logic.
 
 ### Adding New Features

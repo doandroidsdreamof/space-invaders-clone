@@ -1,18 +1,16 @@
 package entities;
 
-import utils.AnimationManager;
 import java.awt.image.BufferedImage;
 
 import java.awt.Rectangle;
 import java.util.*;
 
 import constants.Constants;
+import managers.AnimationManager;
 
 public abstract class AbstractEntity {
     private int x, y, width, height;
     private long lastShotTime;
-    // ! isStop => it must be a single source of truth for each instance in order to
-    // achieve movement.
     private AnimationManager animation;
     private Boolean isAlive;
     private List<Bullet> bullets;
@@ -107,7 +105,8 @@ public abstract class AbstractEntity {
         }
         return null;
     }
-       public void updateBullets() {
+
+    public void updateBullets() {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet currentBullet = bullets.get(i);
             currentBullet.update();

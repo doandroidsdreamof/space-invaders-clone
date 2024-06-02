@@ -1,4 +1,4 @@
-package utils;
+package managers;
 
 import java.awt.image.BufferedImage;
 import constants.Constants;
